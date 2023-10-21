@@ -6,6 +6,7 @@ import {
   AdminAddUserToGroupCommand,
   AdminRemoveUserFromGroupCommand,
   AdminInitiateAuthCommand,
+  AdminGetUserCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
 import { AuthConfig } from "./types.js";
 import {
@@ -50,6 +51,30 @@ export class AuthModule {
         Username: username,
       })
     );
+  }
+
+  async getUser(username: string) {
+    const result = await this.cognitoClient.send(
+      new AdminGetUserCommand({
+        UserPoolId: this.config.output.UserPoolId,
+        Username: username,
+      })
+    );
+
+    return result;
+  }
+
+  async userExists(username: string) {
+    try {
+      await this.getUser(username);
+      return true;
+    } catch (e: any) {
+      if (e.name === "UserNotFoundException") {
+        return false;
+      }
+
+      throw e;
+    }
   }
 
   async setPassword(username: string, password: string) {

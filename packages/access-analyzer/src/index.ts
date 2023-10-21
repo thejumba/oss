@@ -63,7 +63,9 @@ export class AccessAnalyzer {
        * - password: The password of the test user.
        * - attributes: An object containing the attributes of the test user. The keys are the attribute names and the values are the attribute values.
        */
-      userGenerator: () => Promise<{
+      userGenerator: (
+        usernameExists: (username: string) => Promise<boolean>
+      ) => Promise<{
         username: string;
         password: string;
         attributes: Record<string, string>;
@@ -164,8 +166,9 @@ export class AccessAnalyzer {
   }
 
   async generateUserSession({ groups }: { groups?: string[] }) {
-    const { username, password, attributes } =
-      await this.config.userGenerator();
+    const { username, password, attributes } = await this.config.userGenerator(
+      this.auth.userExists.bind(this.auth)
+    );
 
     const user = await this.auth.createUser(username, password, attributes);
 
