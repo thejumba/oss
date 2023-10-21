@@ -8,6 +8,9 @@ import {
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { AuthModule } from "./auth.js";
 import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
+import { DynamoDBModule } from "./dynamodb.js";
+import { HttpRequest } from "@smithy/protocol-http";
+import fetch, { Request } from "node-fetch";
 
 export class AccessAnalyzer {
   private amplifyMeta: AmplifyMeta;
@@ -20,9 +23,11 @@ export class AccessAnalyzer {
     idToken: string;
     accessToken: string;
   };
+  private cleanupActions: (() => Promise<void>)[] = [];
 
   // modules
   private authModule: AuthModule;
+  private dynamodbModule: DynamoDBModule;
 
   constructor(
     private config: {
@@ -124,10 +129,29 @@ export class AccessAnalyzer {
       this.cognitoClient,
       this.identityClient
     );
+
+    this.dynamodbModule = new DynamoDBModule(
+      this.dynamodbClient,
+      this.amplifyMeta.api[
+        config.apiResourceName
+      ].output.GraphQLAPIIdOutput.concat(this.environment)
+    );
   }
 
   get auth() {
     return this.authModule;
+  }
+
+  get dynamodb() {
+    return this.dynamodbModule;
+  }
+
+  registerCleanupAction(action: () => Promise<void>) {
+    this.cleanupActions.push(action);
+  }
+
+  async cleanup() {
+    await Promise.all(this.cleanupActions.map((action) => action()));
   }
 
   /**
@@ -157,10 +181,79 @@ export class AccessAnalyzer {
       throw new Error("Unable to create a test user session");
     }
 
+    this.registerCleanupAction(async () => {
+      await this.auth.deleteUser(username);
+    });
+
     return {
       user,
       idToken: authResult.IdToken,
       accessToken: authResult.AccessToken,
+    };
+  }
+
+  async executeGraphQL<TQuery>({
+    query,
+    variables,
+    ...opts
+  }: {
+    query: string;
+    public?: boolean;
+    variables?: Record<string, any>;
+    session?: Awaited<ReturnType<AccessAnalyzer["generateUserSession"]>>;
+    cleanup?: (result: TQuery) => Promise<void>;
+  }) {
+    const api = this.amplifyMeta.api[this.config.apiResourceName];
+    const url = api.output.GraphQLAPIEndpointOutput;
+
+    let json: TQuery;
+
+    if (opts.public) {
+      const signature = await this.auth.getPublicSignature(this.config.region);
+      const endpoint = new URL(url);
+      const requestToBeSigned = new HttpRequest({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          host: endpoint.host,
+        },
+        hostname: endpoint.host,
+        body: JSON.stringify({ query, variables }),
+        path: endpoint.pathname,
+      });
+      const signed = await signature.sign(requestToBeSigned);
+      const request = new Request(endpoint, signed);
+      const response = await fetch(request);
+      json = (await response.json()) as TQuery;
+    } else if (!this.currentSession) {
+      throw new Error(
+        "You must call enhanceWithUserSession() before executing GraphQL queries"
+      );
+    } else {
+      const accessToken =
+        opts?.session?.accessToken ?? this.currentSession.accessToken!;
+      const headers = {
+        Authorization: accessToken,
+        "Content-Type": "application/json",
+      };
+      const body = JSON.stringify({ query, variables });
+      const response = await fetch(url, { method: "POST", headers, body });
+      json = (await response.json()) as TQuery;
+    }
+
+    let response = json as any;
+
+    if (opts?.cleanup && !response.errors) {
+      this.registerCleanupAction(async () => await opts.cleanup!(json));
+    }
+
+    return {
+      response: json,
+      hasErrors: response.errors && response.errors.length > 0,
+      isUnauthorized:
+        response.errors?.some(
+          (error: any) => error.errorType?.includes("Unauthorized")
+        ) ?? false,
     };
   }
 }
