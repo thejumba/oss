@@ -163,6 +163,8 @@ export class AccessAnalyzer {
    */
   async enhanceWithUserSession({ groups }: { groups?: string[] }) {
     this.currentSession = await this.generateUserSession({ groups });
+
+    return this.currentSession;
   }
 
   async generateUserSession({ groups }: { groups?: string[] }) {
