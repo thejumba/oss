@@ -1,5 +1,11 @@
 # @jumba/access-analyzer
 
+## 0.0.5
+
+### Patch Changes
+
+- b4df753: skip zod schema parsing
+
 ## 0.0.4
 
 ### Patch Changes
