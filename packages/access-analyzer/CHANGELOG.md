@@ -1,5 +1,11 @@
 # @jumba/access-analyzer
 
+## 0.0.3
+
+### Patch Changes
+
+- cc4a2a8: user exists utility function
+
 ## 0.0.2
 
 ### Patch Changes
