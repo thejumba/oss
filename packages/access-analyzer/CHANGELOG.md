@@ -1,5 +1,11 @@
 # @jumba/access-analyzer
 
+## 0.0.4
+
+### Patch Changes
+
+- ed48330: return analyzer current session post-enhancement
+
 ## 0.0.3
 
 ### Patch Changes
