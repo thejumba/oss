@@ -9,7 +9,9 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "ci:publish": "pnpm publish -r",
+    "ci:version": "pnpm changeset version"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
