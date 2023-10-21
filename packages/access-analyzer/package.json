@@ -1,0 +1,28 @@
+{
+  "name": "@jumba/access-analyzer",
+  "version": "0.0.0",
+  "description": "A package for analyzing access to Amplify AppSync GraphQL APIs",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "amplify",
+    "appsync",
+    "graphql",
+    "access",
+    "analyzer",
+    "appsync-mock"
+  ],
+  "author": "Jumba Developers",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-crypto/sha256-js": "^5.2.0",
+    "@aws-sdk/client-cognito-identity": "^3.433.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.433.0",
+    "@aws-sdk/client-dynamodb": "^3.433.0",
+    "@smithy/protocol-http": "^3.0.8",
+    "@smithy/signature-v4": "^2.0.12"
+  }
+}
