@@ -69,5 +69,6 @@ jobs:
           title: "ci: update versions"
           publish: pnpm ci:publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # use pat instead of default token
+          NPM_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
