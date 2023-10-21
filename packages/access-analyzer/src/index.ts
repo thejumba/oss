@@ -82,15 +82,7 @@ export class AccessAnalyzer {
     }
 
     const meta = fs.readFileSync(metaPath, "utf8");
-    const result = AmplifyMetaSchema.safeParse(JSON.parse(meta));
-
-    if (result.success === false) {
-      throw new Error(
-        `amplify-meta.json is invalid: ${result.error.flatten().formErrors[0]}`
-      );
-    }
-
-    this.amplifyMeta = result.data;
+    this.amplifyMeta = JSON.parse(meta) as AmplifyMeta;
 
     // load current environment info
     const currentEnvPath = path.join(
