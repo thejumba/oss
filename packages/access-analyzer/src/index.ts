@@ -1,16 +1,16 @@
-import fs from "fs";
-import path from "path";
-import { AmplifyMeta, AmplifyMetaSchema } from "./types.js";
+import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import {
   CognitoIdentityProviderClient,
   UserType,
 } from "@aws-sdk/client-cognito-identity-provider";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { AuthModule } from "./auth.js";
-import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
-import { DynamoDBModule } from "./dynamodb.js";
 import { HttpRequest } from "@smithy/protocol-http";
+import fs from "fs";
 import fetch, { Request } from "node-fetch";
+import path from "path";
+import { AuthModule } from "./auth.js";
+import { DynamoDBModule } from "./dynamodb.js";
+import { AmplifyMeta } from "./types.js";
 
 export class AccessAnalyzer {
   private amplifyMeta: AmplifyMeta;
@@ -135,7 +135,7 @@ export class AccessAnalyzer {
       this.dynamodbClient,
       this.amplifyMeta.api[
         config.apiResourceName
-      ].output.GraphQLAPIIdOutput.concat(this.environment)
+      ].output.GraphQLAPIIdOutput.concat(`-${this.environment}`)
     );
   }
 
@@ -172,6 +172,7 @@ export class AccessAnalyzer {
     );
 
     const user = await this.auth.createUser(username, password, attributes);
+    await this.auth.setPassword(username, password);
 
     if (groups) {
       await Promise.all(
