@@ -7,6 +7,14 @@
   "scripts": {
     "build": "tsc"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "keywords": [
     "amplify",
     "appsync",
