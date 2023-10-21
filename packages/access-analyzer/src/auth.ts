@@ -21,7 +21,8 @@ export class AuthModule {
   constructor(
     private config: AuthConfig,
     private cognitoClient: CognitoIdentityProviderClient,
-    private identityClient: CognitoIdentityClient
+    private identityClient: CognitoIdentityClient,
+    private useWebAppClient: boolean
   ) {}
 
   async createUser(
@@ -112,7 +113,9 @@ export class AuthModule {
     const result = await this.cognitoClient.send(
       new AdminInitiateAuthCommand({
         UserPoolId: this.config.output.UserPoolId,
-        ClientId: this.config.output.AppClientIDWeb,
+        ClientId: this.useWebAppClient
+          ? this.config.output.AppClientIDWeb
+          : this.config.output.AppClientID,
         AuthFlow: "ADMIN_USER_PASSWORD_AUTH",
         AuthParameters: {
           USERNAME: username,

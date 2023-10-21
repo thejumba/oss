@@ -70,6 +70,12 @@ export class AccessAnalyzer {
         password: string;
         attributes: Record<string, string>;
       }>;
+      /**
+       * The type of Cognito App Client to use when generating credentials for test users. Cognito creates
+       * two app clients by default: "default" and "web". The "default" app client is used for admin operations
+       * such as creating users and signing in users. The "web" app client is used for signing in users.
+       */
+      useWebAppClient?: boolean;
     }
   ) {
     const metaPath = path.join(
@@ -121,7 +127,8 @@ export class AccessAnalyzer {
     this.authModule = new AuthModule(
       this.amplifyMeta.auth[config.authResourceName],
       this.cognitoClient,
-      this.identityClient
+      this.identityClient,
+      config.useWebAppClient ?? false
     );
 
     this.dynamodbModule = new DynamoDBModule(
