@@ -1,5 +1,11 @@
 # @jumba/access-analyzer
 
+## 0.0.6
+
+### Patch Changes
+
+- a896942: dynamic cognito client selection
+
 ## 0.0.5
 
 ### Patch Changes
