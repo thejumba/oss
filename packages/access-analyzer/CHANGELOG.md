@@ -1,5 +1,11 @@
 # @jumba/access-analyzer
 
+## 0.0.8
+
+### Patch Changes
+
+- 4ede0e2: patched session checking logic
+
 ## 0.0.7
 
 ### Patch Changes
