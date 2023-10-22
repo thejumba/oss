@@ -230,13 +230,13 @@ export class AccessAnalyzer {
       const request = new Request(endpoint, signed);
       const response = await fetch(request);
       json = (await response.json()) as TQuery;
-    } else if (!this.currentSession) {
+    } else if (!this.currentSession && !opts.session) {
       throw new Error(
-        "You must call enhanceWithUserSession() before executing GraphQL queries"
+        "You must call enhanceWithUserSession() before executing GraphQL queries or provide a session in the options"
       );
     } else {
       const accessToken =
-        opts?.session?.accessToken ?? this.currentSession.accessToken!;
+        opts?.session?.accessToken ?? this.currentSession?.accessToken!;
       const headers = {
         Authorization: accessToken,
         "Content-Type": "application/json",
