@@ -4,6 +4,7 @@ import type { CognitoUser } from "amazon-cognito-identity-js";
 import { Auth, Hub } from "aws-amplify";
 import Link from "next/link";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
+import * as React from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface UserAttributes {
@@ -46,12 +47,8 @@ export const AuthContext = createContext<
   | null
 >(null);
 
-function DefaultLoader() {
-  return <div>Loading...</div>;
-}
-
 export function AmplifyAuthProvider({
-  loader: Loader = <DefaultLoader />,
+  loader: Loader = null,
   children,
   publicRoutes,
   allowedGroups,
@@ -285,10 +282,10 @@ export function AmplifyAuthProvider({
       });
 
       const params = decodeURIComponent(searchParams.toString());
-      let redirectUrl = `/auth/sign-in${params ? `?${params}` : ""}`;
+      let redirectUrl = `${authLinks.signIn}${params ? `?${params}` : ""}`;
 
       if (user.challengeName === "SMS_MFA") {
-        redirectUrl = `/auth/verify${params ? `?${params}` : ""}`;
+        redirectUrl = `${authLinks.verify}${params ? `?${params}` : ""}`;
       }
       setAuth((prev) => ({
         ...prev,
