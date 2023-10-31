@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.2
+
+### Patch Changes
+
+- 1edcc2f: update package compilation config
+
 ## 0.0.1
 
 ### Patch Changes
