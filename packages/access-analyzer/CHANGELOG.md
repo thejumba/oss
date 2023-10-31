@@ -1,5 +1,11 @@
 # @jumba/access-analyzer
 
+## 0.0.9
+
+### Patch Changes
+
+- 14cc21e: update execute function types
+
 ## 0.0.8
 
 ### Patch Changes
