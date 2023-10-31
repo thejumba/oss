@@ -202,7 +202,7 @@ export class AccessAnalyzer {
     variables,
     ...opts
   }: {
-    query: string;
+    query: keyof TQuery extends never ? string : string & keyof TQuery;
     public?: boolean;
     variables?: Record<string, any>;
     session?: Awaited<ReturnType<AccessAnalyzer["generateUserSession"]>>;
