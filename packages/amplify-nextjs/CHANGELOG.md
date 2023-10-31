@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.3
+
+### Patch Changes
+
+- 6888af7: fixed package exports config
+
 ## 0.0.2
 
 ### Patch Changes
