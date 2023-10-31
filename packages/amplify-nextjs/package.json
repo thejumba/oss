@@ -8,7 +8,8 @@
     "build": "tsc"
   },
   "exports": {
-    "./auth": "./dist/auth.jsx"
+    ".": "./dist/index.js",
+    "./auth": "./dist/auth.js"
   },
   "publishConfig": {
     "access": "public",
