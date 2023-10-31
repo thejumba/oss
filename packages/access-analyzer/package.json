@@ -1,6 +1,6 @@
 {
   "name": "@jumba/access-analyzer",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A package for analyzing access to Amplify AppSync GraphQL APIs",
   "main": "dist/index.js",
   "type": "module",
