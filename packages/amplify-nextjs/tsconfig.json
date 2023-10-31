@@ -1,0 +1,11 @@
+{
+  "extends": "@jumba-oss/tsconfig/base",
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"]
+  },
+  "include": ["src/**/*"]
+}

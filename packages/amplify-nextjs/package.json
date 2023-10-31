@@ -1,0 +1,43 @@
+{
+  "name": "@jumba/amplify-nextjs",
+  "version": "0.0.0",
+  "description": "Delightful hooks and utilities for working with AWS Amplify and Next.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    "./auth": "./dist/auth.jsx"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "amplify",
+    "appsync",
+    "nextjs",
+    "react",
+    "hooks",
+    "amplify-nextjs",
+    "amplify-hooks"
+  ],
+  "author": "Jumba Developers",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.2.33",
+    "aws-amplify": "^5.3.11",
+    "next": "^14.0.1",
+    "react": "^18.2.0"
+  },
+  "peerDependencies": {
+    "aws-amplify": ">=5",
+    "next": ">=13",
+    "react": ">=18"
+  }
+}
