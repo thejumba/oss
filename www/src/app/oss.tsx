@@ -20,8 +20,9 @@ export function JumbaOpenSource() {
     <div className="p-10 mx-auto max-w-6xl">
       <h3 className="text-4xl font-medium mb-5">Jumba Open Source</h3>
       <p className="text-xl max-w-3xl text-gray-500">
-        When we build something cool, we like to share it with the world. We
-        have a few open source projects that we&apos;re working on
+          We use a lot of open source software at Jumba and we believe in
+          contributing back to the community as much as we can. Some of the 
+          projects we have created or have contributed to are listed below.
       </p>
       <section className="my-14 grid grid-cols-1 md:grid-cols-3 gap-10">
         {oss.map((project) => (

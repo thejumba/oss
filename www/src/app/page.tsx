@@ -7,7 +7,7 @@ import { TextReveal } from "./text-reveal";
 
 export default function Home() {
   const textToReveal =
-    "We are solving the challenges facing construction in Africa one problem at a time by making it easier and more affordable for people to own homes.";
+    "Our mission is to advance the construction industry by leveraging technology to simplify processes, enhance transparency, and increase reliability and efficiency in order to make construction materials more accessible to people across Africa.";
 
   return (
     <main className="relative">

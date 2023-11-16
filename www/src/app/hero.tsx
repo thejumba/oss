@@ -1,4 +1,5 @@
-import logo from "@/assets/logo-black.png";
+import logo from "@/assets/logo.png";
+import jumba from "@/assets/jumba.png";
 import { Badge } from "@/components/ui/badge";
 import { IconBrandGithub } from "@tabler/icons-react";
 import {
@@ -14,7 +15,7 @@ export function Hero() {
   return (
     <section className="relative">
       <header className="p-5 mx-auto max-w-[85rem] gap-5 flex items-center bg-transparent">
-        <Image src={logo} alt="Jumba Logo" width={30} height={30} />
+        <Image src={jumba} alt="Jumba Name" height={35} />
         <h1 className="text-3xl hidden sm:flex z-10 font-medium">
           {" "}
           {"< "} Developers {" />"}
@@ -32,10 +33,6 @@ export function Hero() {
           <Link href="https://github.com/thejumba">
             Github
             <IconBrandGithub className="inline-block ml-1" />
-          </Link>
-          <Link href="https://github.com/thejumba">
-            Blog
-            <BookOpenTextIcon className="inline-block ml-1.5" />
           </Link>
         </nav>
       </header>
@@ -60,9 +57,9 @@ export function Hero() {
             Construction in Africa, Simplified
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-400">
-            A brainchild of the tech team at Jumba. A place for us to share our
-            open source projects, blog about our experiences building cool stuff
-            and share updates on any job opportunities on our team.
+            Our vision is to be the go-to partner for construction projects in Africa. 
+            We, the tech team at Jumba, are excited to share what we have been working
+            on. Scroll down to see our open source projects and open roles on the team.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-8">
             <Link
@@ -70,13 +67,6 @@ export function Hero() {
               className="rounded-md bg-orange-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Visit Jumba
-            </Link>
-            <Link
-              href="#"
-              className="flex gap-1 group text-sm font-semibold leading-6 text-gray-100"
-            >
-              Read Blog{" "}
-              <ChevronRightIcon className="group-hover:translate-x-1 transition-all" />
             </Link>
           </div>
         </div>

@@ -9,22 +9,32 @@ const positions = [
   {
     title: "Frontend Engineer",
     description:
-      "We are looking for a Frontend Engineer to join our team. You will be responsible for building the 'client-side' of our web applications. You should be able to translate our company and customer needs into functional and appealing interactive applications.",
+      "Excited to build beautiful, performant applications in Typescript? We would love to chat with you. You'll be responsible for building out great user experiences for our customers and internal users.",
   },
   {
     title: "Backend Engineer",
     description:
-      "We are looking for a Backend Engineer to join our team. You will be responsible for building the 'server-side' of our web applications. You should be able to translate our company and customer needs into functional and appealing interactive applications.",
+      "We've built Jumba to be entirely serverless using Node.JS and AWS Amplify. You need not have experience in both to be considered.",
   },
   {
     title: "Mobile Engineer",
     description:
-      "We are looking for a Mobile Engineer to join our team. You will be responsible for building the 'client-side' of our mobile applications. You should be able to translate our company and customer needs into functional and appealing interactive applications.",
+      "We are looking for mobile engineers interested in building applications on React Native.",
   },
   {
     title: "QA Engineer",
     description:
-      "We are looking for a QA Engineer to join our team. You will be responsible for testing our web and mobile applications. You should be able to translate our company and customer needs into functional and appealing interactive applications.",
+      "We aim to ship high quality and well tested features every single time. Our QA team is integral to that. Please reach out particularly if you are experienced with automated testing",
+  },
+  {
+    title: "Site Reliability Engineer",
+    description:
+      "Our goal is to have an uptime of 99.99% across all our systems. You'll be tasked with building the pipelines and processes to support that.",
+  },
+  {
+    title: "Product Manager",
+    description:
+      "Reporting direcly to the CTO, you'll work on guiding product development from inception to launch.",
   },
 ];
 
@@ -64,7 +74,7 @@ export function OpenPositions() {
         . You can tell us a bit about yourself, if you like. Please also
         include: 1. The job title you&apos;d like to apply for 2. your GitHub
         username 3. Why you&apos;re excited about joining Jumba and 4. a
-        sentence about your favorite movie , so we know you’re not a bot :)
+        sentence about your favorite movie , so we know you’re not a bot. :)
       </p>
     </div>
   );

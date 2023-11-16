@@ -32,7 +32,7 @@ const benefits = [
   {
     title: "Health Insurance",
     description:
-      "All full-time employees are eligible for health insurance coverage for themselves and their spouse and up to 4 children",
+      "All full-time employees are eligible for health insurance coverage for themselves, their spouse and up to 4 children",
     color: "red",
     accent: "bg-red-400/5",
     background: "bg-red-400/20",
@@ -52,7 +52,7 @@ const benefits = [
   {
     title: "Work From Home Flexibility",
     description:
-      "We' a cool team :) Work from home or the office depending on what works best for you and the team.",
+      "Work from home or the office depending on what works best for you and the team.",
     color: "purple",
     accent: "bg-purple-400/5",
     background: "bg-purple-400/20",
@@ -60,9 +60,9 @@ const benefits = [
     icon: HomeModernIcon,
   },
   {
-    title: "First-class hardware",
+    title: "First Class Hardware and Software",
     description:
-      "We'll provide you with bleeding edge hardware and tools that you'll need to help you do your best work.",
+      "We'll provide you with bleeding edge hardware and tools that you'll need to do your best work.",
     color: "pink",
     accent: "bg-pink-400/5",
     background: "bg-pink-400/20",
