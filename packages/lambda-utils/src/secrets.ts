@@ -7,7 +7,7 @@ import {
 export async function getAmplifySecret(secretName: string) {
   const client = new SSMClient();
   const command = new GetParameterCommand({
-    Name: process.env[secretName[0]] || "",
+    Name: process.env[secretName] || "",
     WithDecryption: true,
   });
   const { Parameter } = await client.send(command);
