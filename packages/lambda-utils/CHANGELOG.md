@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.3
+
+### Patch Changes
+
+- dd58017: patched parameter retrival function
+
 ## 0.0.2
 
 ### Patch Changes
