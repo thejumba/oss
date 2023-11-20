@@ -12,6 +12,10 @@ type OnDeleteCallback<T extends Record<string, unknown>> = (
   oldImage: T
 ) => void | Promise<void>;
 
+type ModelName<T> = T extends { __typename: string }
+  ? T["__typename"]
+  : "ALL_MODELS" | Omit<string, "ALL_MODELS">;
+
 class Emitter {
   private onChangeCallbacks: Record<string, OnChangeCallback<any>[]> = {};
   private onCreateCallbacks: Record<string, OnCreateCallback<any>[]> = {};
@@ -34,7 +38,7 @@ class Emitter {
 
   on<T extends Record<string, unknown>>(
     event: "CREATE" | "UPDATE" | "DELETE" | "ALL_EVENTS",
-    modelName: string | "ALL_MODELS",
+    modelName: ModelName<T>,
     callback: OnCreateCallback<T> | OnChangeCallback<T> | OnDeleteCallback<T>
   ) {
     switch (event) {
@@ -58,31 +62,31 @@ class Emitter {
   }
 
   onModelChange<T extends Record<string, unknown>>(
-    modelName: string,
+    modelName: ModelName<T>,
     callback: OnChangeCallback<T>
   ) {
-    this.onChangeCallbacks[modelName] = [
-      ...(this.onChangeCallbacks[modelName] || []),
+    this.onChangeCallbacks[modelName as string] = [
+      ...(this.onChangeCallbacks[modelName as string] || []),
       callback,
     ];
   }
 
   onModelCreate<T extends Record<string, unknown>>(
-    modelName: string,
+    modelName: ModelName<T>,
     callback: OnCreateCallback<T>
   ) {
-    this.onCreateCallbacks[modelName] = [
-      ...(this.onCreateCallbacks[modelName] || []),
+    this.onCreateCallbacks[modelName as string] = [
+      ...(this.onCreateCallbacks[modelName as string] || []),
       callback,
     ];
   }
 
   onModelDelete<T extends Record<string, unknown>>(
-    modelName: string,
+    modelName: ModelName<T>,
     callback: OnDeleteCallback<T>
   ) {
-    this.onDeleteCallbacks[modelName] = [
-      ...(this.onDeleteCallbacks[modelName] || []),
+    this.onDeleteCallbacks[modelName as string] = [
+      ...(this.onDeleteCallbacks[modelName as string] || []),
       callback,
     ];
   }
