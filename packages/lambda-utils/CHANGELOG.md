@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.4
+
+### Patch Changes
+
+- 17e071a: added typed inference for emitter args
+
 ## 0.0.3
 
 ### Patch Changes
