@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.5
+
+### Patch Changes
+
+- 208b840: implemented callback configuration via optional fields
+
 ## 0.0.4
 
 ### Patch Changes
