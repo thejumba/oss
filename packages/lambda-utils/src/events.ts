@@ -44,7 +44,7 @@ class Emitter {
     event: "CREATE" | "UPDATE" | "DELETE" | "ALL_EVENTS",
     modelName: ModelName<T>,
     callback: OnCreateCallback<T> | OnChangeCallback<T> | OnDeleteCallback<T>,
-    options?: CallbackOptions
+    options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
     switch (event) {
@@ -70,7 +70,7 @@ class Emitter {
   onModelChange<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
     callback: OnChangeCallback<T>,
-    options?: CallbackOptions
+    options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
     this.onChangeCallbacks[modelName as string] = [
@@ -82,7 +82,7 @@ class Emitter {
   onModelCreate<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
     callback: OnCreateCallback<T>,
-    options?: CallbackOptions
+    options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
     this.onCreateCallbacks[modelName as string] = [
@@ -94,7 +94,7 @@ class Emitter {
   onModelDelete<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
     callback: OnDeleteCallback<T>,
-    options?: CallbackOptions
+    options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
     this.onDeleteCallbacks[modelName as string] = [
