@@ -16,6 +16,10 @@ type ModelName<T> = T extends { __typename: string }
   ? T["__typename"]
   : "ALL_MODELS" | Omit<string, "ALL_MODELS">;
 
+type CallbackOptions = {
+  enabled?: boolean;
+};
+
 class Emitter {
   private onChangeCallbacks: Record<string, OnChangeCallback<any>[]> = {};
   private onCreateCallbacks: Record<string, OnCreateCallback<any>[]> = {};
@@ -39,8 +43,10 @@ class Emitter {
   on<T extends Record<string, unknown>>(
     event: "CREATE" | "UPDATE" | "DELETE" | "ALL_EVENTS",
     modelName: ModelName<T>,
-    callback: OnCreateCallback<T> | OnChangeCallback<T> | OnDeleteCallback<T>
+    callback: OnCreateCallback<T> | OnChangeCallback<T> | OnDeleteCallback<T>,
+    options?: CallbackOptions
   ) {
+    if (!options?.enabled) return;
     switch (event) {
       case "CREATE":
         this.onModelCreate(modelName, callback as OnCreateCallback<T>);
@@ -63,8 +69,10 @@ class Emitter {
 
   onModelChange<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
-    callback: OnChangeCallback<T>
+    callback: OnChangeCallback<T>,
+    options?: CallbackOptions
   ) {
+    if (!options?.enabled) return;
     this.onChangeCallbacks[modelName as string] = [
       ...(this.onChangeCallbacks[modelName as string] || []),
       callback,
@@ -73,8 +81,10 @@ class Emitter {
 
   onModelCreate<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
-    callback: OnCreateCallback<T>
+    callback: OnCreateCallback<T>,
+    options?: CallbackOptions
   ) {
+    if (!options?.enabled) return;
     this.onCreateCallbacks[modelName as string] = [
       ...(this.onCreateCallbacks[modelName as string] || []),
       callback,
@@ -83,8 +93,10 @@ class Emitter {
 
   onModelDelete<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
-    callback: OnDeleteCallback<T>
+    callback: OnDeleteCallback<T>,
+    options?: CallbackOptions
   ) {
+    if (!options?.enabled) return;
     this.onDeleteCallbacks[modelName as string] = [
       ...(this.onDeleteCallbacks[modelName as string] || []),
       callback,
