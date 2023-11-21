@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.6
+
+### Patch Changes
+
+- 13d2ff7: added default callback options
+
 ## 0.0.5
 
 ### Patch Changes
