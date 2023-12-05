@@ -64,6 +64,7 @@ export function AmplifyAuthProvider({
   publicRoutes,
   allowedGroups,
   authLinks = {
+    home: "/",
     signIn: "/auth/sign-in",
     signUp: "/auth/sign-up",
     verify: "/auth/verify",
@@ -77,6 +78,7 @@ export function AmplifyAuthProvider({
   publicRoutes?: string[];
   allowedGroups?: string[];
   authLinks?: {
+    home?: string;
     signIn: string;
     signUp: string;
     verify: string;
@@ -151,7 +153,7 @@ export function AmplifyAuthProvider({
   // authed user trying to access auth pages
   if (auth.user && isAuthPage) {
     const next = searchParams.get("next");
-    redirect(next || "/");
+    redirect(next || authLinks.home || "/");
   }
 
   // unauther trying to access protected pages
