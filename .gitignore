@@ -37,3 +37,6 @@ yarn-error.log*
 
 # artifacts
 dist
+packages/*/*.js
+packages/*/*.d.ts
+packages/*/*.d.ts.map
