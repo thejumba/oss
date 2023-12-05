@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.5
+
+### Patch Changes
+
+- e055f0a: removed hardcoded page links
+
 ## 0.0.4
 
 ### Patch Changes
