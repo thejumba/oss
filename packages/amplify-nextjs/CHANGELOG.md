@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.8
+
+### Patch Changes
+
+- 8e7b518: password reset functionality
+
 ## 0.0.7
 
 ### Patch Changes
