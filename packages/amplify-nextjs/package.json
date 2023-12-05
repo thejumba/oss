@@ -1,15 +1,21 @@
 {
   "name": "@jumba/amplify-nextjs",
   "version": "0.0.7",
-  "description": "Delightful hooks and utilities for working with AWS Amplify and Next.js",
+  "description": "Delightful hooks and utilities for working with AWS Amplify and Next.js (app directory)",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./auth": "./dist/auth.js"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./auth": {
+      "import": "./dist/auth.js",
+      "types": "./dist/auth.d.ts"
+    }
   },
   "publishConfig": {
     "access": "public",
