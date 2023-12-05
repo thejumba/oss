@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.7
+
+### Patch Changes
+
+- 30847e3: added home page overwriting option
+
 ## 0.0.6
 
 ### Patch Changes
