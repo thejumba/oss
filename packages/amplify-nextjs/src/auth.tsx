@@ -2,10 +2,20 @@
 
 import type { CognitoUser } from "amazon-cognito-identity-js";
 import { Auth, Hub } from "aws-amplify";
-import Link from "next/link";
-import { redirect, usePathname, useSearchParams } from "next/navigation";
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import * as React from "react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 
 interface UserAttributes {
   sub: string;
@@ -18,6 +28,7 @@ interface AuthContextType {
   user: CognitoUser | undefined;
   userAttributes: UserAttributes | undefined;
   loading?: boolean;
+  isTransitioning?: boolean;
   error?: Error | undefined;
   loginSession: CognitoUser | undefined;
   loginCredentials?: { username: string; password: string };
@@ -74,10 +85,11 @@ export function AmplifyAuthProvider({
   renderUnauthorized?: React.FC;
   redirectUnauthorized?: string;
 }) {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const linkRef = useRef<HTMLAnchorElement>(null);
 
+  const [isTransitioning, startTransition] = useTransition();
   const [error, setError] = useState<Error | undefined>();
   const [loading, setLoading] = useState(true);
   const [auth, setAuth] = useState<AuthContextType>({
@@ -129,8 +141,11 @@ export function AmplifyAuthProvider({
 
   // redirect stored in url
   if (auth.redirectUrl) {
-    linkRef.current?.click();
-    setAuth((prev) => ({ ...prev, redirectUrl: undefined }));
+    startTransition(() => {
+      const url = auth.redirectUrl;
+      setAuth((prev) => ({ ...prev, redirectUrl: undefined }));
+      url && router.replace(url);
+    });
   }
 
   // authed user trying to access auth pages
@@ -191,7 +206,9 @@ export function AmplifyAuthProvider({
         setAuth((prev) => ({
           ...prev,
           loginSession: data,
-          redirectUrl: `${authLinks.resetPassword}${params ? `?${params}` : ""}`,
+          redirectUrl: `${authLinks.resetPassword}${
+            params ? `?${params}` : ""
+          }`,
           loginCredentials: { username, password },
           sessionType: "login",
         }));
@@ -306,6 +323,7 @@ export function AmplifyAuthProvider({
         set,
         ...auth,
         error,
+        isTransitioning,
         loading,
         signIn,
         inGroup,
@@ -315,15 +333,6 @@ export function AmplifyAuthProvider({
         resendVerificationCode,
       }}
     >
-      {/* prefer link navigation over router methods */}
-      <Link
-        href={auth.redirectUrl || "#"}
-        ref={linkRef}
-        style={{
-          display: "none",
-        }}
-      />
-
       {children}
     </AuthContext.Provider>
   );

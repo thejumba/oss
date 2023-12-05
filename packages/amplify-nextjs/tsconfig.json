@@ -5,6 +5,11 @@
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "./": ["dist/index.js"],
+      "./auth": ["dist/auth.js"]
+    },
     "lib": ["dom", "dom.iterable", "esnext"]
   },
   "include": ["src/**/*"]
