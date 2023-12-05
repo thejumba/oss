@@ -52,6 +52,12 @@ export const AuthContext = createContext<
         attributes?: Record<string, string>;
       }) => Promise<void>;
       signOut: () => Promise<void>;
+      resetPassword: (data: {
+        code?: string;
+        password: string;
+        attributes?: Record<string, string>;
+      }) => Promise<void>;
+      sendPasswordResetCode: (username: string) => Promise<void>;
       resendVerificationCode: () => Promise<void>;
       confirmVerificationCode: (code: string) => Promise<void>;
     })
@@ -319,6 +325,47 @@ export function AmplifyAuthProvider({
     }
   }
 
+  async function sendPasswordResetCode(username: string) {
+    try {
+      await Auth.forgotPassword(username);
+      setAuth((prev) => ({
+        ...prev,
+        redirectUrl: `${authLinks.resetPassword}`,
+        loginCredentials: { username, password: "" },
+      }));
+    } catch (e) {
+      setError(e as Error);
+      throw e;
+    }
+  }
+
+  async function resetPassword({
+    code,
+    password,
+    attributes,
+  }: {
+    code?: string;
+    password: string;
+    attributes?: Record<string, string>;
+  }) {
+    try {
+      if (!code) {
+        await Auth.completeNewPassword(auth.loginSession, password, attributes);
+      } else if (!auth.loginCredentials?.username) {
+        throw new Error("User session is required");
+      } else {
+        await Auth.forgotPasswordSubmit(
+          auth.loginCredentials.username,
+          code,
+          password
+        );
+      }
+    } catch (error) {
+      console.log("Error resetting password", error);
+      throw error;
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -331,6 +378,8 @@ export function AmplifyAuthProvider({
         inGroup,
         signUp,
         signOut,
+        resetPassword,
+        sendPasswordResetCode,
         confirmVerificationCode,
         resendVerificationCode,
       }}
