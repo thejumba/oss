@@ -1,6 +1,6 @@
 {
   "name": "@jumba/amplify-nextjs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Delightful hooks and utilities for working with AWS Amplify and Next.js",
   "main": "dist/index.js",
   "type": "module",
