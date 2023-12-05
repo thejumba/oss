@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.4
+
+### Patch Changes
+
+- d38ae48: added ssr utility helper
+
 ## 0.0.3
 
 ### Patch Changes
