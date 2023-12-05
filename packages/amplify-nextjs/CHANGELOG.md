@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.6
+
+### Patch Changes
+
+- 2127463: setup transitions state
+
 ## 0.0.5
 
 ### Patch Changes
