@@ -1,5 +1,11 @@
 # @jumba/amplify-nextjs
 
+## 0.0.10
+
+### Patch Changes
+
+- 49362c4: removed home page option from auth links
+
 ## 0.0.9
 
 ### Patch Changes
