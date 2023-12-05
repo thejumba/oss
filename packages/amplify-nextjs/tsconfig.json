@@ -1,7 +1,7 @@
 {
   "extends": "@jumba-oss/tsconfig/base",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": ".",
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react",

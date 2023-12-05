@@ -326,11 +326,15 @@ export function AmplifyAuthProvider({
   }
 
   async function sendPasswordResetCode(username: string) {
+    const params = decodeURIComponent(searchParams.toString());
+    let redirectUrl = `${authLinks.resetPassword}${params ? `?${params}` : ""}`;
+
     try {
-      await Auth.forgotPassword(username);
+      const data = await Auth.forgotPassword(username);
       setAuth((prev) => ({
         ...prev,
-        redirectUrl: `${authLinks.resetPassword}`,
+        redirectUrl,
+        loginSession: data,
         loginCredentials: { username, password: "" },
       }));
     } catch (e) {
