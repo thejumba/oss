@@ -191,7 +191,7 @@ export function AmplifyAuthProvider({
         setAuth((prev) => ({
           ...prev,
           loginSession: data,
-          redirectUrl: `/auth/reset-password${params ? `?${params}` : ""}`,
+          redirectUrl: `${authLinks.resetPassword}${params ? `?${params}` : ""}`,
           loginCredentials: { username, password },
           sessionType: "login",
         }));
@@ -199,7 +199,7 @@ export function AmplifyAuthProvider({
         setAuth((prev) => ({
           ...prev,
           loginSession: data,
-          redirectUrl: `/auth/verify${params ? `?${params}` : ""}`,
+          redirectUrl: `${authLinks.verify}${params ? `?${params}` : ""}`,
           loginCredentials: { username, password },
           sessionType: "login",
         }));
