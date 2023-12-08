@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.7
+
+### Patch Changes
+
+- 7da89d5: updated callback events api
+
 ## 0.0.6
 
 ### Patch Changes
