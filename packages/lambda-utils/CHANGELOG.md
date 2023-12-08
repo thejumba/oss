@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.8
+
+### Patch Changes
+
+- 2ee1e8a: locked aws deps versions
+
 ## 0.0.7
 
 ### Patch Changes
