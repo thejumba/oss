@@ -1,16 +1,18 @@
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { DynamoDBStreamEvent } from "aws-lambda";
 
-type OnChangeCallback<T extends Record<string, unknown>> = (
-  oldImage: T,
-  newImage: T
-) => void | Promise<void>;
-type OnCreateCallback<T extends Record<string, unknown>> = (
-  newImage: T
-) => void | Promise<void>;
-type OnDeleteCallback<T extends Record<string, unknown>> = (
-  oldImage: T
-) => void | Promise<void>;
+type OnChangeCallback<T extends Record<string, unknown>> = (args: {
+  oldImage: T;
+  newImage: T;
+}) => void | Promise<void>;
+type OnCreateCallback<T extends Record<string, unknown>> = (args: {
+  oldImage: T;
+  newImage: T;
+}) => void | Promise<void>;
+type OnDeleteCallback<T extends Record<string, unknown>> = (args: {
+  oldImage: T;
+  newImage: T;
+}) => void | Promise<void>;
 
 type ModelName<T> = T extends { __typename: string }
   ? T["__typename"]
@@ -111,9 +113,9 @@ class Emitter {
       let modelName = eventSourceARN?.split("/")?.[1]?.split("-").shift();
 
       // @ts-expect-error - type mismatch
-      let newData = unmarshall(dynamodbData?.NewImage || {});
+      let newImage = unmarshall(dynamodbData?.NewImage || {});
       // @ts-expect-error - type mismatch
-      let previousData = unmarshall(dynamodbData?.OldImage || {});
+      let oldImage = unmarshall(dynamodbData?.OldImage || {});
 
       console.log({ eventName, modelName, eventSourceARN });
       switch (eventName) {
@@ -122,10 +124,11 @@ class Emitter {
             const fns = this.onCreateCallbacks[modelName || ""] || [];
             const globals = this.onCreateCallbacks["ALL_MODELS"] || [];
             await Promise.all(
-              // @ts-expect-error - global listeners expect old and new data
-              globals?.map((callback) => callback(previousData, newData))
+              globals?.map((callback) => callback({ oldImage, newImage }))
             );
-            await Promise.all(fns?.map((callback) => callback(newData)));
+            await Promise.all(
+              fns?.map((callback) => callback({ oldImage, newImage }))
+            );
           }
           break;
         case "MODIFY":
@@ -133,10 +136,10 @@ class Emitter {
             const fns = this.onChangeCallbacks[modelName || ""] || [];
             const globals = this.onChangeCallbacks["ALL_MODELS"] || [];
             await Promise.all(
-              globals?.map((callback) => callback(previousData, newData))
+              globals?.map((callback) => callback({ oldImage, newImage }))
             );
             await Promise.all(
-              fns?.map((callback) => callback(previousData, newData))
+              fns?.map((callback) => callback({ oldImage, newImage }))
             );
           }
           break;
@@ -145,10 +148,11 @@ class Emitter {
             const fns = this.onDeleteCallbacks[modelName || ""] || [];
             const globals = this.onDeleteCallbacks["ALL_MODELS"] || [];
             await Promise.all(
-              // @ts-expect-error - global listeners expect old and new data
-              globals?.map((callback) => callback(previousData, newData))
+              globals?.map((callback) => callback({ oldImage, newImage }))
             );
-            await Promise.all(fns?.map((callback) => callback(previousData)));
+            await Promise.all(
+              fns?.map((callback) => callback({ oldImage, newImage }))
+            );
           }
           break;
         default:
