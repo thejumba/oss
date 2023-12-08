@@ -1,6 +1,6 @@
 {
   "name": "@jumba/lambda-utils",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A collection of utilities for AWS Lambda functions",
   "main": "dist/index.js",
   "scripts": {
