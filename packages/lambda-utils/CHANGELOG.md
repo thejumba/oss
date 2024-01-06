@@ -1,5 +1,12 @@
 # @jumba/lambda-utils
 
+## 0.0.10
+
+### Patch Changes
+
+- b9a10aa: patched package type definitions
+- 4de135b: exposed library types
+
 ## 0.0.9
 
 ### Patch Changes
