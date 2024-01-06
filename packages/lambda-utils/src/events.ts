@@ -1,18 +1,17 @@
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { DynamoDBStreamEvent } from "aws-lambda";
 
-type OnChangeCallback<T extends Record<string, unknown>> = (args: {
+type CallbackContext<T> = {
   oldImage: T;
   newImage: T;
-}) => void | Promise<void>;
-type OnCreateCallback<T extends Record<string, unknown>> = (args: {
-  oldImage: T;
-  newImage: T;
-}) => void | Promise<void>;
-type OnDeleteCallback<T extends Record<string, unknown>> = (args: {
-  oldImage: T;
-  newImage: T;
-}) => void | Promise<void>;
+  eventName: "INSERT" | "MODIFY" | "REMOVE" | undefined;
+  modelName: string | undefined;
+  eventSourceARN: string | undefined;
+};
+
+type Callback<T extends Record<string, unknown>> = (
+  args: CallbackContext<T>
+) => void | Promise<void>;
 
 type ModelName<T> = T extends { __typename: string }
   ? T["__typename"]
@@ -23,9 +22,9 @@ type CallbackOptions = {
 };
 
 class Emitter {
-  private onChangeCallbacks: Record<string, OnChangeCallback<any>[]> = {};
-  private onCreateCallbacks: Record<string, OnCreateCallback<any>[]> = {};
-  private onDeleteCallbacks: Record<string, OnDeleteCallback<any>[]> = {};
+  private onChangeCallbacks: Record<string, Callback<any>[]> = {};
+  private onCreateCallbacks: Record<string, Callback<any>[]> = {};
+  private onDeleteCallbacks: Record<string, Callback<any>[]> = {};
   private static instance: Emitter | null = null;
 
   private constructor() {
@@ -45,24 +44,24 @@ class Emitter {
   on<T extends Record<string, unknown>>(
     event: "CREATE" | "UPDATE" | "DELETE" | "ALL_EVENTS",
     modelName: ModelName<T>,
-    callback: OnCreateCallback<T> | OnChangeCallback<T> | OnDeleteCallback<T>,
+    callback: Callback<T>,
     options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
     switch (event) {
       case "CREATE":
-        this.onModelCreate(modelName, callback as OnCreateCallback<T>);
+        this.onModelCreate(modelName, callback);
         break;
       case "UPDATE":
-        this.onModelChange(modelName, callback as OnChangeCallback<T>);
+        this.onModelChange(modelName, callback);
         break;
       case "DELETE":
-        this.onModelDelete(modelName, callback as OnDeleteCallback<T>);
+        this.onModelDelete(modelName, callback);
         break;
       case "ALL_EVENTS":
-        this.onModelCreate(modelName, callback as OnCreateCallback<T>);
-        this.onModelChange(modelName, callback as OnChangeCallback<T>);
-        this.onModelDelete(modelName, callback as OnDeleteCallback<T>);
+        this.onModelCreate(modelName, callback);
+        this.onModelChange(modelName, callback);
+        this.onModelDelete(modelName, callback);
         break;
       default:
         break;
@@ -71,7 +70,7 @@ class Emitter {
 
   onModelChange<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
-    callback: OnChangeCallback<T>,
+    callback: Callback<T>,
     options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
@@ -83,7 +82,7 @@ class Emitter {
 
   onModelCreate<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
-    callback: OnCreateCallback<T>,
+    callback: Callback<T>,
     options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
@@ -95,7 +94,7 @@ class Emitter {
 
   onModelDelete<T extends Record<string, unknown>>(
     modelName: ModelName<T>,
-    callback: OnDeleteCallback<T>,
+    callback: Callback<T>,
     options: CallbackOptions = { enabled: true }
   ) {
     if (!options?.enabled) return;
