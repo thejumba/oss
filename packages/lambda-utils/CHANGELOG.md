@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.9
+
+### Patch Changes
+
+- 324201a: updated callback function context
+
 ## 0.0.8
 
 ### Patch Changes
