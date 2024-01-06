@@ -1,7 +1,7 @@
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { DynamoDBStreamEvent } from "aws-lambda";
 
-type CallbackContext<T> = {
+export type CallbackContext<T> = {
   oldImage: T;
   newImage: T;
   eventName: "INSERT" | "MODIFY" | "REMOVE" | undefined;
@@ -9,15 +9,15 @@ type CallbackContext<T> = {
   eventSourceARN: string | undefined;
 };
 
-type Callback<T extends Record<string, unknown>> = (
+export type Callback<T extends Record<string, unknown>> = (
   args: CallbackContext<T>
 ) => void | Promise<void>;
 
-type ModelName<T> = T extends { __typename: string }
+export type ModelName<T> = T extends { __typename: string }
   ? T["__typename"]
   : "ALL_MODELS" | Omit<string, "ALL_MODELS">;
 
-type CallbackOptions = {
+export type CallbackOptions = {
   enabled?: boolean;
 };
 
