@@ -117,17 +117,21 @@ class Emitter {
       // @ts-expect-error - type mismatch
       let oldImage = unmarshall(dynamodbData?.OldImage || {});
 
-      console.log({ eventName, modelName, eventSourceARN });
+      const context = {
+        oldImage,
+        newImage,
+        eventName,
+        modelName,
+        eventSourceARN,
+      };
+
       switch (eventName) {
         case "INSERT":
           {
             const fns = this.onCreateCallbacks[modelName || ""] || [];
             const globals = this.onCreateCallbacks["ALL_MODELS"] || [];
             await Promise.all(
-              globals?.map((callback) => callback({ oldImage, newImage }))
-            );
-            await Promise.all(
-              fns?.map((callback) => callback({ oldImage, newImage }))
+              [...globals, ...fns]?.map((callback) => callback(context))
             );
           }
           break;
@@ -136,10 +140,7 @@ class Emitter {
             const fns = this.onChangeCallbacks[modelName || ""] || [];
             const globals = this.onChangeCallbacks["ALL_MODELS"] || [];
             await Promise.all(
-              globals?.map((callback) => callback({ oldImage, newImage }))
-            );
-            await Promise.all(
-              fns?.map((callback) => callback({ oldImage, newImage }))
+              [...globals, ...fns]?.map((callback) => callback(context))
             );
           }
           break;
@@ -148,10 +149,7 @@ class Emitter {
             const fns = this.onDeleteCallbacks[modelName || ""] || [];
             const globals = this.onDeleteCallbacks["ALL_MODELS"] || [];
             await Promise.all(
-              globals?.map((callback) => callback({ oldImage, newImage }))
-            );
-            await Promise.all(
-              fns?.map((callback) => callback({ oldImage, newImage }))
+              [...globals, ...fns]?.map((callback) => callback(context))
             );
           }
           break;
