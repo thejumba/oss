@@ -280,7 +280,14 @@ export function JumbaTeam({ deviceType }: { deviceType: string }) {
           </div>
         ))}
       </Carousel>
-      <div className="flex flex-col items-center py-4">
+      <div className="flex flex-col items-center py-6">
+        <hr
+          className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"
+          style={{ width: "70%" }}
+        />
+      </div>
+
+      <div className="flex flex-col items-center pt-8">
         <h3 className="text-center text-2xl md:text-3xl mb-6">
           Interested in working with us?
         </h3>
