@@ -1,22 +1,22 @@
-import { JumbaBenefits } from "./benefits"
-import { Hero } from "./hero"
-import { JumbaOpenSource } from "./oss"
-import { OpenPositions } from "./positions"
-import { JumbaTeam } from "./team"
-import { TextReveal } from "./text-reveal"
+import { JumbaBenefits } from "./benefits";
+import { Hero } from "./hero";
+import { JumbaOpenSource } from "./oss";
+import { OpenPositions } from "./positions";
+import { JumbaTeam } from "./team";
+import { TextReveal } from "./text-reveal";
 
-import { headers } from "next/headers"
-import { NextRequest } from "next/server"
-import { getSelectorsByUserAgent } from "react-device-detect"
+import type { NextApiRequest } from "next";
+import { headers } from "next/headers";
+import { getSelectorsByUserAgent } from "react-device-detect";
 
-export default function Home(request: NextRequest) {
+export default function Home(request: NextApiRequest) {
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
-  )
-  const deviceType = isMobile ? "mobile" : "desktop"
+  );
+  const deviceType = isMobile ? "mobile" : "desktop";
 
   const textToReveal =
-    "Our mission is to advance the construction industry by leveraging technology to simplify processes, enhance transparency, and increase reliability and efficiency in order to make construction materials more accessible to people across Africa."
+    "Our mission is to advance the construction industry by leveraging technology to simplify processes, enhance transparency, and increase reliability and efficiency in order to make construction materials more accessible to people across Africa.";
 
   return (
     <main className="relative">
@@ -36,5 +36,5 @@ export default function Home(request: NextRequest) {
         </h4>
       </div>
     </main>
-  )
+  );
 }
