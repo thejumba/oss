@@ -5,7 +5,7 @@ import { OpenPositions } from "./positions";
 import { JumbaTeam } from "./team";
 import { TextReveal } from "./text-reveal";
 
-import type { NextApiRequest } from "next";
+import { NextApiRequest } from "next";
 import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 
