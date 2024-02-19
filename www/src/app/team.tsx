@@ -14,11 +14,9 @@ const team = [
     title: "CTO",
     image: miano,
     about:
-      "Meet Miano Njoka, our dynamic Chief Technology Officer (CTO) with a storied journey in shaping technological landscapes. Miano's career, rooted in a deep passion for innovation, commenced with impactful roles in software development, where he first demonstrated his coding prowess. His journey led him through key positions in technology strategy, software architecture, and team leadership, accumulating over two decades of experience.\nFrom the early days of crafting elegant code to steering the technological vision of our company, Miano's evolution embodies a commitment to excellence and a relentless pursuit of cutting-edge solutions. As our CTO, he draws from his diverse background, seamlessly integrating technical expertise and visionary leadership. Miano's trailblazing career history enriches our organizational culture, fostering an environment where innovation flourishes, challenges transform into opportunities, and aspirations materialize into achievements. In every role, Miano has been a catalyst for transformative change, and as our CTO, he continues to lead us toward new frontiers in technology and business synergy.",
+      "Miano co-founded Jumba with Kagure in April 2022 and leads the software engineering and product management teams. Prior to founding Jumba, Miano worked at Google in San Francisco, California for 7 years on a variety of products including Google Ads, Google Assistant and Google Chrome. Before joining Google, Miano was a Software Engineer at the United Nations in Nairobi. Miano holds a BSc in Computer Science from JKUAT and an MBA from the University of Illinois at Urbana-Champaign.",
     socials: {
-      linkedIn: "https://linkedin.com/in/miano",
-      github: "https://github.com/miano",
-      twitter: "https://twitter.com",
+      linkedIn: "https://www.linkedin.com/in/miano/",
     },
   },
   {
@@ -26,24 +24,30 @@ const team = [
     title: "Team Lead",
     image: ndaba,
     about:
-      "Meet Victor, our Senior Programmer—code virtuoso orchestrating symphonies of logic. With a keyboard as his instrument, he blends innovation and efficiency seamlessly into every line of code.",
-    socials: {},
+      "A skilled software developer with a deep passion for elegant and quality code, Victor believes that well-crafted solutions can be artistic. As Tech Lead, he excels in full-stack development and oversees some cool projects.  A strong advocate for open source, Victor champions collaborative development and actively contributes to the community. His career path transitioned from mechatronics engineering to software development, highlighting his self-taught skills and adaptable nature. When not immersed in code, you might find him debating film trivia or tinkering with the laws of physics.",
+    socials: {
+      linkedIn: "https://linkedin.com/in/victor-ndaba",
+    },
   },
   {
     name: "Michelle Njeri",
     title: "Frontend Engineer",
     image: njeri,
     about:
-      "Meet Michelle, our Front-End Engineer—the artist crafting digital experiences with code and creativity. She transforms design concepts into visually stunning and user-friendly interfaces, making every click a visual delight.",
-    socials: {},
+      "Meet Michelle, vet doctor turned coding whiz! 🐾. Michelle taught herself software development while studying veterinary medicine at the University of Nairobi. Before joining Jumba, she worked as a software developer building .NET platforms used by insurance agencies and county governments. Now, a graduate of Moringa School, she's coding up a storm with her trusty hedgehog, ET, by her side. Michelle not only excels in backend development but also passionately engages in frontend work, infusing creativity into her coding. Watch out world, this dynamic duo is here to make a paw-sitive impact in tech! 🦔",
+    socials: {
+      linkedIn: "https://linkedin.com/in/michelle-njeri",
+    },
   },
   {
     name: "Michelle Oyiolo",
     title: "Mobile Engineer",
     image: oyiolo,
     about:
-      "Meet Oyiolo, our Mobile Engineer—the app virtuoso transforming concepts into touchable reality. With a passion for user-centric design, she crafts seamless experiences, delighting users with every tap and swipe.",
-    socials: {},
+      "Michelle Oyiolo is a highly skilled software engineer within Jumba's mobile development team since January 2023. With a robust background in full-stack development, she is deeply committed to collaborative coding. Michelle has also successfully deployed two mobile applications. Graduating top of her class with a degree in Applied Computer Technology from the United States International University, Africa, she previously earned a diploma in Mobile Application Development from Riara University. ßMichelle is always eager for new challenges, striving to advance her role in the ever-changing software development field.",
+    socials: {
+      linkedIn: "https://linkedin.com/in/michelle-oyiolo",
+    },
   },
 ]
 
@@ -76,7 +80,7 @@ export function JumbaTeam({ deviceType }: { deviceType: string }) {
       </p>
       <Carousel
         swipeable={true}
-        draggable={false}
+        draggable={true}
         centerMode={false}
         showDots={true}
         dotListClass="custom-dot-list-style"
