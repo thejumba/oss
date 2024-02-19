@@ -5,11 +5,10 @@ import { OpenPositions } from "./positions";
 import { JumbaTeam } from "./team";
 import { TextReveal } from "./text-reveal";
 
-import { NextApiRequest } from "next";
 import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 
-export default function Home(request: NextApiRequest) {
+export default function Home() {
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
   );
