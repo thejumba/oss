@@ -5,7 +5,15 @@ import { OpenPositions } from "./positions";
 import { JumbaTeam } from "./team";
 import { TextReveal } from "./text-reveal";
 
+import { headers } from "next/headers";
+import { getSelectorsByUserAgent } from "react-device-detect";
+
 export default function Home() {
+  const { isMobile } = getSelectorsByUserAgent(
+    headers().get("user-agent") ?? ""
+  );
+  const deviceType = isMobile ? "mobile" : "desktop";
+
   const textToReveal =
     "Our mission is to advance the construction industry by leveraging technology to simplify processes, enhance transparency, and increase reliability and efficiency in order to make construction materials more accessible to people across Africa.";
 
@@ -14,7 +22,7 @@ export default function Home() {
       <Hero />
       <TextReveal block={textToReveal} />
       <JumbaOpenSource />
-      <JumbaTeam />
+      <JumbaTeam deviceType={deviceType} />
       <JumbaBenefits />
       <OpenPositions />
 
