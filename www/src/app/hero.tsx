@@ -1,11 +1,8 @@
-import logo from "@/assets/logo.png";
 import jumba from "@/assets/jumba.png";
 import { Badge } from "@/components/ui/badge";
 import { IconBrandGithub } from "@tabler/icons-react";
 import {
-    ArrowUpRightIcon,
-    BookOpenTextIcon,
-    ChevronRightIcon,
+  ArrowUpRightIcon
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,8 +12,8 @@ export function Hero() {
   return (
     <section className="relative">
       <header className="p-5 mx-auto max-w-[85rem] gap-5 flex items-center bg-transparent">
-        <Image src={jumba} alt="Jumba Name" height={35} />
-        <h1 className="text-3xl hidden sm:flex z-10 font-medium">
+        <Image src={jumba} alt="Jumba Name" height={25} className="z-10" />
+        <h1 className="text-xl -ml-2 hidden sm:flex z-10 font-medium">
           {" "}
           {"< "} Developers {" />"}
         </h1>

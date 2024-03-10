@@ -3,6 +3,12 @@ import Link from "next/link";
 export function JumbaOpenSource() {
   const oss = [
     {
+      title: "Amplify action",
+      description:
+        "A composite github action for easily pulling or pushing Amplify environments in github workflows",
+      href: "https://www.github.com/thejumba/amplify-action",
+    },
+    {
       title: "Lambda Utils",
       description:
         "A collection of utilities for working with AWS Lambda functions. Useful when working with streams from DynamoDB and performing AppsSync operations.",
@@ -37,25 +43,14 @@ export function JumbaOpenSource() {
             href={project.href}
             className={`rounded-xl transition-all bg-gray-600/20 hover:bg-gradient-to-tr hover:animate-pulse from-yellow-400 to-orange-500 via-pink-500 p-[1px] cursor-pointer`}
           >
-            <div className="rounded-xl bg-background flex flex-col gap-5 p-8 py-10">
-              <h4 className="text-xl mb-3">{project.title}</h4>
+            <div className="rounded-xl h-full bg-background flex flex-col gap-5 p-8 py-10">
+              <h4 className="text-xl">{project.title}</h4>
               <p className="text-gray-400 text-lg line-clamp-3">
                 {project.description}
               </p>
             </div>
           </Link>
         ))}
-        <div
-          className={`rounded-xl bg-gradient-to-tr animate-pulse from-yellow-400 to-orange-500 via-pink-500 p-[1px]`}
-        >
-          <div className="rounded-xl bg-background flex flex-col gap-5 p-8 py-10">
-            <h4 className="text-xl mb-3">More Coming soon...</h4>
-            <p className="text-gray-400 text-lg line-clamp-3">
-              We&apos;re working on a few more projects that we&apos;ll be
-              releasing soon.
-            </p>
-          </div>
-        </div>
       </section>
     </div>
   );
