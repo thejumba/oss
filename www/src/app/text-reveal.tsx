@@ -1,60 +1,60 @@
-"use client";
+"use client"
 
-import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import clsx from "clsx"
+import { useEffect, useRef, useState } from "react"
 
 export function TextReveal({ block }: { block: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [sticky, setSticky] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [sticky, setSticky] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current) return
 
       const containerHeight =
-        containerRef.current.getBoundingClientRect().height;
-      const containerTop = containerRef.current.offsetTop;
+        containerRef.current.getBoundingClientRect().height
+      const containerTop = containerRef.current.offsetTop
 
       // this adjusted scroll position should be negative until scrolling in the container starts
       const adjustedScrollPosition =
-        window.scrollY - containerTop + containerHeight;
+        window.scrollY - containerTop + containerHeight
 
       // before scrolling into the container starts
       if (adjustedScrollPosition < 0) {
-        setScrollProgress(0);
-        setSticky(false);
+        setScrollProgress(0)
+        setSticky(false)
         // after scrolling out of the container ends
       } else if (adjustedScrollPosition > containerHeight) {
-        setSticky(false);
-        setScrollProgress(1);
+        setSticky(false)
+        setScrollProgress(1)
         // while scrolling in the container
       } else {
-        setSticky(true);
+        setSticky(true)
         const scrollProgressPercentage = Math.max(
           adjustedScrollPosition / containerHeight,
           0
-        );
-        setScrollProgress(scrollProgressPercentage);
+        )
+        setScrollProgress(scrollProgressPercentage)
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll)
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [setSticky, setScrollProgress]);
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [setSticky, setScrollProgress])
 
   const revealText = (text: string) => {
-    const words = text.split(" ");
+    const words = text.split(" ")
 
     return words.map((word, index) => {
-      const wordRevealPercentage = ((index + 1) / words.length) * 100;
-      let opacity = 0.1;
+      const wordRevealPercentage = ((index + 1) / words.length) * 100
+      let opacity = 0.1
 
       if (scrollProgress * 100 >= wordRevealPercentage) {
-        opacity = 1;
+        opacity = 1
       }
 
       return (
@@ -64,9 +64,9 @@ export function TextReveal({ block }: { block: string }) {
         >
           {word}{" "}
         </span>
-      );
-    });
-  };
+      )
+    })
+  }
 
   return (
     <>
@@ -77,7 +77,7 @@ export function TextReveal({ block }: { block: string }) {
         )}
       >
         <div
-          className="text-4xl sm:text-5xl leading-tight font-medium max-w-3xl w-full"
+          className="text-3xl sm:text-5xl leading-tight font-medium max-w-3xl w-full"
           style={{ scrollSnapAlign: sticky ? "start" : "none" }}
         >
           <p className="text-left">{revealText(block)}</p>
@@ -87,10 +87,10 @@ export function TextReveal({ block }: { block: string }) {
         ref={containerRef}
         className="text-white bg-background min-h-screen h-screen flex justify-center items-center py-28 px-6"
       >
-        <div className="text-4xl sm:text-5xl leading-tight font-medium max-w-3xl w-full">
+        <div className="text-3xl sm:text-5xl leading-tight font-medium max-w-3xl w-full">
           <p className="text-left">{block}</p>
         </div>
       </div>
     </>
-  );
+  )
 }
