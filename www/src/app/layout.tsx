@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/next";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -15,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(GeistSans.className, "dark")}>{children}</body>
+      <body className={cn(GeistSans.className, "dark")}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
