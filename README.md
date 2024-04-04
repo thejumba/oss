@@ -1,81 +1,29 @@
-# Turborepo starter
+# Jumba OSS
 
-This is an official starter Turborepo.
+Hello there 👋. Welcome to the Jumba Open Source repository. We are small, dynamic team that likes to move fast and ship things. In our projects, we use a lot of open source tools and in that spirit, we like to give back to the open source communities, by open sourcing some packages that we use and have found extremely useful. 
 
-## Using this example
+**Learn more about Jumba and what we do [here](https://jum.ba/oss)**
 
-Run the following command:
+**Looking for a job? Check out our [open positions](https://jum.ba/jobs)**
 
-```sh
-npx create-turbo@latest
-```
+## Getting Started
+This repository is structured as a monorepo using [turbo](https://turbo.build) and [pnpm](https://pnpm.io). It contains the following structure:
 
-## What's inside?
+- `www/` - The site hosted at `developers.jumba.com`
+- `tooling/` - Shared configs for eslint and typescript
+- `packages/` - Houses all individual open source packages
 
-This Turborepo includes the following packages/apps:
 
-### Apps and Packages
+## Packages
+- [@jumba/access-analyzer](./packages/access-analyzer/) - A tool to help you automate testing the permissions of your amplify powered applications
+- [@jumba/amplify-nextjs](./packages/amplify-nextjs/) - A package to help you integrate amplify with nextjs
+- [@jumba/lambda-utils](./packages/lambda-utils/) - A collection of utilities to help simplify your amplify lambda functions.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+You will find that most of our packages are built around amplify, as we are heavy users of the amplify framework and it can be quite a pain to get things working just right. We hope that our packages can help you get up and running faster.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Amplify Github Action
+One other useful open source project not hosted in this repository is the [amplify github action](https://github.com/thejumba/amplify-action). This action allows you to easily deploy your amplify applications to the cloud using github actions.
 
-### Utilities
+Feel free to use the packages and let us know if you have any issues or suggestions. We are always looking to improve our packages and make them more useful to the community.
 
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+If you would like to contribute to any of the packages, please feel free to open a PR. The packages are licensed under the MIT license, so you are free to use them in any way you see fit.
