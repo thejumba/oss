@@ -23,7 +23,7 @@ export function Hero() {
             <Badge className="absolute top-0 bg-orange-400/20 text-orange-400/80 -left-10 rounded-full">4</Badge>
           </Link>
 
-          <Link href="https://jumba.com">
+          <Link href="https://www.jumba.com">
             Jumba
             <ArrowUpRightIcon className="inline-block ml-1" />
           </Link>
