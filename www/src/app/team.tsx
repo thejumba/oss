@@ -37,7 +37,7 @@ const team = [
     title: "Frontend Engineer",
     image: njeri,
     about:
-      "Michelle's journey from veterinary medicine to IT is anything but typical, but that's what makes her story so compelling. Currently pursuing a BSC in IT at JKUAT, she began her coding adventure while studying Veterinary Medicine at the University of Nairobi, proving that curiosity knows no bounds. Before joining Jumba, Michelle applied her skills to build .NET platforms for insurance agencies. Now, as a Moringa School graduate, she's fully immersed in the world of frontend development, where her creativity shines. Driven by a passion for crafting seamless and engaging user experiences, Michelle is set to leave her mark in the tech industry.",
+      "Michelle's journey from veterinary medicine to software development is anything but typical, but that's what makes her story so compelling. Currently pursuing a BSc in IT at JKUAT, she began her coding adventure while studying Veterinary Medicine at the University of Nairobi, proving that curiosity knows no bounds. Before joining Jumba, Michelle applied her skills to build .NET platforms for insurance agencies. Now, as a Moringa School graduate, she's fully immersed in the world of frontend development, where her creativity shines. Driven by a passion for crafting seamless and engaging user experiences, Michelle is set to leave her mark in the tech industry.",
     socials: {
       linkedIn: "https://linkedin.com/in/michelle-njeri",
     },
