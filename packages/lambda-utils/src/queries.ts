@@ -2,7 +2,7 @@ import { Sha256 } from "@aws-crypto/sha256-js";
 import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { HttpRequest } from "@smithy/protocol-http";
 import { SignatureV4 } from "@smithy/signature-v4";
-import fetch, { Request } from "node-fetch";
+import { logger } from "./logger";
 
 type QueryFnConfig = {
   AWS_REGION?: string;
@@ -57,18 +57,18 @@ export async function graphqlQuery(
         // retry on 5xx errors
         retryCount++;
         let backoff = 2 ** retryCount * 100;
-        console.info(`Retrying after ${backoff}ms (attempt ${retryCount})`);
+        logger.info(`Retrying after ${backoff}ms (attempt ${retryCount})`);
         await new Promise((resolve) => setTimeout(resolve, backoff));
         continue;
       }
       return response.json() as any;
     } catch (error: any) {
-      console.error(error.message);
-      console.error(error.stack);
+      logger.error(error.message);
+      logger.error(error.stack);
       if (retryCount < MAX_RETRIES) {
         retryCount++;
         let backoff = 2 ** retryCount * 100;
-        console.info(`Retrying after ${backoff}ms (attempt ${retryCount})`);
+        logger.info(`Retrying after ${backoff}ms (attempt ${retryCount})`);
         await new Promise((resolve) => setTimeout(resolve, backoff));
         continue;
       }
@@ -77,13 +77,7 @@ export async function graphqlQuery(
   }
 }
 
-export async function executeGraphqlQuery<TData, TQuery>({
-  query,
-  variables,
-  queryName,
-  fetchAllItems,
-  config,
-}: {
+export async function executeGraphqlQuery<TData, TQuery>(opts: {
   query: string;
   queryName: keyof TQuery;
   fetchAllItems?: boolean;
@@ -95,6 +89,9 @@ export async function executeGraphqlQuery<TData, TQuery>({
   } & Record<string, any>;
   config?: QueryFnConfig;
 }): Promise<TData> {
+  logger.info(opts, `Executing graphql query ${opts.queryName as string}`);
+
+  const { query, variables, queryName, fetchAllItems, config } = opts;
   if (fetchAllItems) {
     const items = [];
     let nextToken = null;
@@ -111,8 +108,23 @@ export async function executeGraphqlQuery<TData, TQuery>({
       );
 
       if (response.errors && response.errors.length > 0) {
+        logger.error(
+          {
+            ...opts,
+            errors: response.errors,
+          },
+          `Error executing query ${queryName as string}`
+        );
         throw new Error(JSON.stringify(response.errors[0]));
       }
+
+      logger.info(
+        {
+          ...opts,
+          data: response.data,
+        },
+        `Fetched items for query ${queryName as string}`
+      );
 
       items.push(...response.data[queryName].items);
       nextToken = response.data[queryName].nextToken;
@@ -121,8 +133,22 @@ export async function executeGraphqlQuery<TData, TQuery>({
     return items as TData;
   } else {
     const response = await graphqlQuery(query, variables, config);
+    logger.info(
+      {
+        ...opts,
+        data: response.data,
+      },
+      `Fetched items for query ${queryName as string}`
+    );
 
     if (response.errors && response.errors.length > 0) {
+      logger.error(
+        {
+          ...opts,
+          errors: response.errors,
+        },
+        `Error executing query ${queryName as string}`
+      );
       throw new Error(JSON.stringify(response.errors[0]));
     }
 

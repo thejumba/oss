@@ -9,7 +9,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./queries": "./dist/queries.js",
-    "./events": "./dist/events.js"
+    "./events": "./dist/events.js",
+    "./logger": "./dist/logger.js"
   },
   "publishConfig": {
     "access": "public",
@@ -35,7 +36,7 @@
     "@aws-sdk/util-dynamodb": "3.433.0",
     "@smithy/protocol-http": "3.0.8",
     "@smithy/signature-v4": "2.0.12",
-    "node-fetch": "2"
+    "pino": "^9.5.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.126",
