@@ -1,5 +1,12 @@
 # @jumba/lambda-utils
 
+## 0.0.11
+
+### Patch Changes
+
+- 847fbe3: include the sentry trace id in log object
+- 155b188: configure structured logging with pino and prefer standard web `fetch` API for auto instrumentation
+
 ## 0.0.10
 
 ### Patch Changes
