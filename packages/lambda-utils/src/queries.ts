@@ -56,19 +56,19 @@ export async function graphqlQuery(
       if (response.status >= 500 && retryCount < MAX_RETRIES) {
         // retry on 5xx errors
         retryCount++;
-        let backoff = 2 ** retryCount * 100;
-        logger.info(`Retrying after ${backoff}ms (attempt ${retryCount})`);
+        const backoff = 2 ** retryCount * 100;
+        logger.trace(`Retrying after ${backoff}ms (attempt ${retryCount})`);
         await new Promise((resolve) => setTimeout(resolve, backoff));
         continue;
       }
       return response.json() as any;
     } catch (error: any) {
       logger.error(error.message);
-      logger.error(error.stack);
+
       if (retryCount < MAX_RETRIES) {
         retryCount++;
-        let backoff = 2 ** retryCount * 100;
-        logger.info(`Retrying after ${backoff}ms (attempt ${retryCount})`);
+        const backoff = 2 ** retryCount * 100;
+        logger.trace(`Retrying after ${backoff}ms (attempt ${retryCount})`);
         await new Promise((resolve) => setTimeout(resolve, backoff));
         continue;
       }
@@ -89,8 +89,6 @@ export async function executeGraphqlQuery<TData, TQuery>(opts: {
   } & Record<string, any>;
   config?: QueryFnConfig;
 }): Promise<TData> {
-  logger.info(opts, `Executing graphql query ${opts.queryName as string}`);
-
   const { query, variables, queryName, fetchAllItems, config } = opts;
   if (fetchAllItems) {
     const items = [];
@@ -118,7 +116,7 @@ export async function executeGraphqlQuery<TData, TQuery>(opts: {
         throw new Error(JSON.stringify(response.errors[0]));
       }
 
-      logger.info(
+      logger.trace(
         {
           ...opts,
           data: response.data,
@@ -131,29 +129,29 @@ export async function executeGraphqlQuery<TData, TQuery>(opts: {
     } while (nextToken);
 
     return items as TData;
-  } else {
-    const response = await graphqlQuery(query, variables, config);
-    logger.info(
+  }
+
+  const response = await graphqlQuery(query, variables, config);
+  logger.trace(
+    {
+      ...opts,
+      data: response.data,
+    },
+    `Fetched items for query ${queryName as string}`
+  );
+
+  if (response.errors && response.errors.length > 0) {
+    logger.error(
       {
         ...opts,
-        data: response.data,
+        errors: response.errors,
       },
-      `Fetched items for query ${queryName as string}`
+      `Error executing query ${queryName as string}`
     );
-
-    if (response.errors && response.errors.length > 0) {
-      logger.error(
-        {
-          ...opts,
-          errors: response.errors,
-        },
-        `Error executing query ${queryName as string}`
-      );
-      throw new Error(JSON.stringify(response.errors[0]));
-    }
-
-    return response.data[queryName];
+    throw new Error(JSON.stringify(response.errors[0]));
   }
+
+  return response.data[queryName];
 }
 
 export class QueryClient {
