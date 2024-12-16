@@ -1,5 +1,11 @@
 # @jumba/lambda-utils
 
+## 0.0.12
+
+### Patch Changes
+
+- a861ae6: configurable log levels and reduced logger 'noise'
+
 ## 0.0.11
 
 ### Patch Changes
